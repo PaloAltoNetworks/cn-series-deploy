@@ -46,11 +46,4 @@ resource "azurerm_kubernetes_cluster" "default" {
     network_plugin    = "azure"
     load_balancer_sku = "standard"
   }
-
-  addon_profile {
-    kube_dashboard {
-      enabled = var.kube_dashboard_enabled
-    }
-  }
-
 }
