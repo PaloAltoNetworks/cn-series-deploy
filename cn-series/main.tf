@@ -20,15 +20,26 @@ resource "helm_release" "cn-series" {
   name       = "cn-series-deploy"
   repository = "https://paloaltonetworks.github.io/cn-series-helm/"
   chart      = "cn-series"
-  version    = "0.1.1"
+  version    = "0.1.2"
   timeout    = 600
 
-  depends_on = [var.helm_depends_on]
+  // Kubernetes values
+  set {
+    name  = "cluster.deployTo"
+    value = var.k8s_environment
+    type  = "string"
+  }
 
   // Panorma values
   set {
     name  = "panorama.ip"
     value = var.panorama_ip
+    type  = "string"
+  }
+
+  set {
+    name  = "panorama.ip2"
+    value = var.panorama_ip2
     type  = "string"
   }
 
@@ -66,18 +77,6 @@ resource "helm_release" "cn-series" {
   set {
     name  = "cni.version"
     value = var.k8s_cni_version
-    type  = "string"
-  }
-
-  set {
-    name  = "cni.binDir"
-    value = var.k8s_cni_bin_dir
-    type  = "string"
-  }
-
-  set {
-    name  = "cni.confName"
-    value = var.k8s_cni_conf_name
     type  = "string"
   }
 

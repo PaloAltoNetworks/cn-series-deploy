@@ -14,6 +14,12 @@
 # limitations under the License.
 ############################################################################################
 
+// Kubernetes
+variable "k8s_environment" {
+  description = "The Kubernetes environment (gke|eks|aks|openshift|native)"
+  type        = string
+}
+
 // Panorama
 variable "panorama_ip" {
   description = "The Panorama IP address"
@@ -23,11 +29,6 @@ variable "panorama_ip" {
 variable "panorama_auth_key" {
   description = "The Panorama auth key for VM-series registration"
   type        = string
-}
-
-variable "helm_depends_on" {
-  default     = ""
-  description = "Module dependency list"
 }
 
 variable "panorama_device_group" {
@@ -48,86 +49,53 @@ variable "panorama_collector_group" {
 // CNI container
 variable "k8s_cni_image" {
   description = "The CNI container image"
-  default     = "gcr.io/paloaltonetworksgcp-public/pan-cni"
   type        = string
 }
 
 variable "k8s_cni_version" {
   description = "The CNI container image version tag"
-  default     = "1.0.0-b5"
-  type        = string
-}
-
-variable "k8s_cni_bin_dir" {
-  description = "The CNI container binaries directory (Use /host/opt/cni/bin for EKS and AKS.  Use /opt/cni/bin for minikube)"
-  default     = "/home/kubernetes/bin"
-  type        = string
-}
-
-variable "k8s_cni_conf_name" {
-  description = "The CNI container configuration file (Use 10-aws.conflist for AWS.  Use 10-azure.conflist for AKS.  Use k8s.conflist for minikube.)"
-  default     = "10-calico.conflist"
   type        = string
 }
 
 // MP container
 variable "k8s_mp_init_image" {
   description = "The MP init container image"
-  default     = "gcr.io/paloaltonetworksgcp-public/pan-mgmt-init"
   type        = string
 }
 
 variable "k8s_mp_init_version" {
   description = "The MP init container image version tag"
-  default     = "1.0.0-b5"
   type        = string
 }
 
 variable "k8s_mp_image" {
   description = "The MP container image"
-  default     = "gcr.io/paloaltonetworksgcp-public/paloaltonetworks/panos_cn_mgmt"
   type        = string
 }
 
 variable "k8s_mp_image_version" {
   description = "The MP container image version tag"
-  default     = "9.2.0-b46"
   type        = string
 }
 
 variable "k8s_mp_cpu" {
-  description = "The MP container CPU request"
-  default     = "4"
-  type        = string
-}
-
-variable "k8s_mp_mem" {
-  description = "The MP container memory request"
-  default     = "4.0Gi"
+  description = "The MP container CPU limit"
   type        = string
 }
 
 // DP container
 variable "k8s_dp_image" {
   description = "The DP container image"
-  default     = "gcr.io/paloaltonetworksgcp-public/paloaltonetworks/panos_cn_ngfw"
   type        = string
 }
 
 variable "k8s_dp_image_version" {
   description = "The DP container image version tag"
-  default     = "9.2.0-b46"
   type        = string
 }
 
 variable "k8s_dp_cpu" {
-  description = "The DP container CPU request"
-  default     = "1"
+  description = "The DP container CPU limit"
   type        = string
 }
 
-variable "k8s_dp_mem" {
-  description = "The DP container memory request"
-  default     = "2.25Gi"
-  type        = string
-}

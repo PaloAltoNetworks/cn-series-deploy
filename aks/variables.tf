@@ -14,3 +14,24 @@
 # limitations under the License.
 ############################################################################################
 
+
+variable "location" {
+  default     = "East US"
+  type        = string
+  description = "The Azure location"
+}
+
+variable "client_id" {
+  type        = string
+  description = "The Service Principle appId"
+}
+
+variable "client_secret" {
+  type        = string
+  description = "The Service Principle password"
+}
+
+variable "ssh_key" {
+  type        = string
+  description = "The SSH public key"
+}
