@@ -24,17 +24,14 @@ variable "region" {
   description = "The GCP region"
 }
 
-variable "zone" {
-  type        = string
-  description = "The GCP zone"
+variable "gke_username" {
+  default = ""
+  type = string
+  description = "The cluster master username"
 }
 
-variable "panorama_image" {
-  type        = string
-  description = "The boot image for Panorama"
-}
-
-variable "panorama_auth_key" {
-  type        = string
-  description = "The VM auth key generated on Panorama"
+variable "gke_password" {
+  default = ""
+  type = string
+  description = "The cluster master password"
 }

@@ -15,10 +15,6 @@
 ############################################################################################
 
 
-# provider "kubernetes" {
-#   config_path = local_file.kubeconfig.filename
-# }
-
 resource "local_file" "kubeconfig" {
   content  = local.kubeconfig
   filename = "${path.module}/${var.project}-kubeconfig"
@@ -35,13 +31,3 @@ resource "null_resource" "apply_configmap" {
   }
 }
 
-# resource "kubernetes_config_map" "aws_auth" {
-#   metadata {
-#     name      = "my-aws-auth"
-#     namespace = "kube-system"
-#   }
-
-#   data = {
-#     mapRoles = "${local.map_roles}"
-#   }
-# }

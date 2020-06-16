@@ -18,14 +18,14 @@ output "az_resource_group" {
   value = azurerm_resource_group.rg.name
 }
 
-output "az_cluster_id" {
-  value = azurerm_kubernetes_cluster.default.id
+output "az_cluster_name" {
+  value = azurerm_kubernetes_cluster.default.name
 }
 
-output "az_cluster_fqdn" {
+output "az_cluster_endpoint" {
   value = azurerm_kubernetes_cluster.default.fqdn
 }
 
-output "az_cluster_kubeconfig" {
-  value = azurerm_kubernetes_cluster.default.kube_config_raw
-}
+# output "az_cluster_kubeconfig" {
+#   value = azurerm_kubernetes_cluster.default.kube_config_raw
+# }

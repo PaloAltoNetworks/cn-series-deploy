@@ -14,24 +14,21 @@
 # limitations under the License.
 ############################################################################################
 
-
 output "cluster_master_ip" {
-  value       = module.cluster.cluster_master_ip
+  value = google_container_cluster.cluster.endpoint
   description = "The IP endpoint of the GKE cluster master"
 }
 
 output "cluster_name" {
-  value       = module.cluster.cluster_name
+  value = google_container_cluster.cluster.name
   description = "The name of the GKE cluster"
 }
 
-output "cluster_zone" {
-  value       = module.cluster.cluster_zone
+output "cluster_location" {
+  value = google_container_cluster.cluster.location
   description = "The zone in which the GKE cluster resides"
 }
 
-output "panorama_ip" {
-  value       = module.panorama.panorama_ip
-  description = "The IP of the Panorama instance"
+output "cluster_project" {
+  value = google_container_cluster.cluster.project
 }
-

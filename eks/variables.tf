@@ -27,10 +27,10 @@ variable "region" {
   description = "The AWS region"
 }
 
-variable "panorama_auth_key" {
-  type        = string
-  description = "The VM auth key generated on Panorama"
-}
+# variable "panorama_auth_key" {
+#   type        = string
+#   description = "The VM auth key generated on Panorama"
+# }
 
 variable "cluster_version" {
   type        = string

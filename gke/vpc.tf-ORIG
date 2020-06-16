@@ -17,15 +17,15 @@
 // Network
 
 resource "google_compute_network" "vpc" {
-  name                    = var.cluster_network_name
+  name                    = "${var.project}-network"
   auto_create_subnetworks = "false"
 }
 
 // Subnet
 
 resource "google_compute_subnetwork" "subnet" {
-  name          = var.cluster_subnetwork_name
-  network       = var.cluster_network_name
+  name          = "${var.project}-subnet"
+  network       = google_compute_network.vpc.name
   ip_cidr_range = var.cluster_subnetwork_cidr_range
 
   // Secondary ranges
@@ -40,16 +40,16 @@ resource "google_compute_subnetwork" "subnet" {
     ip_cidr_range = var.services_secondary_range_cidr
   }
 
-  depends_on = [
-    google_compute_network.vpc,
-  ]
+  # depends_on = [
+  #   google_compute_network.vpc,
+  # ]
 }
 
 // Firewall rule
 
 resource "google_compute_firewall" "firewall" {
   name        = "panorama-allow-inbound"
-  description = var.firewall_name
+  description = "Inbound access to Panorama"
   network     = google_compute_network.vpc.name
 
   allow {

@@ -16,8 +16,6 @@
 
 
 locals {
-  cluster_name = "${var.project}-${random_id.project_suffix.dec}"
-
   config_map_aws_auth = <<CONFIGMAPAWSAUTH
   apiVersion: v1
   kind: ConfigMap

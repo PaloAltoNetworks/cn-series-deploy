@@ -19,17 +19,17 @@ output "eks_cluster_name" {
 }
 
 output "eks_cluster_endpoint" {
-  value = aws_eks_cluster.ControlPlane.endpoint
+  value = split ("//", aws_eks_cluster.ControlPlane.endpoint)[1]
 }
 
-output "eks_cluster_certificat_authority" {
-  value = aws_eks_cluster.ControlPlane.certificate_authority
-}
+# output "eks_cluster_certificat_authority" {
+#   value = aws_eks_cluster.ControlPlane.certificate_authority
+# }
 
-output "config_map_aws_auth" {
-  value = local.config_map_aws_auth
-}
+# output "config_map_aws_auth" {
+#   value = local.config_map_aws_auth
+# }
 
-output "kubeconfig" {
-  value = local.kubeconfig
-}
+# output "kubeconfig" {
+#   value = local.kubeconfig
+# }

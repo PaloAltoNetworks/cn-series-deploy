@@ -17,7 +17,7 @@
 
 // Nodegroup IAM roles and policies
 resource "aws_iam_role" "NodeInstanceRole" {
-  name = "${local.cluster_name}-NodeInstanceRole"
+  name = "${random_pet.prefix.id}-NodeInstanceRole"
 
   assume_role_policy = <<POLICY
 {
@@ -60,11 +60,11 @@ resource "aws_iam_instance_profile" "node_instance_profile" {
 
 // Security groups and rules
 resource "aws_security_group" "NodeGroupSecurityGroup" {
-  name        = "${local.cluster_name}-nodegroup-NodeGroupSecurityGroup"
+  name        = "${random_pet.prefix.id}-nodegroup-NodeGroupSecurityGroup"
   description = "Communication between the control plane and worker nodegroups"
   vpc_id      = aws_vpc.cluster_vpc.id
   tags = {
-    Name                                                         = "${local.cluster_name}-NodeGroupSecurityGroup"
+    Name                                                         = "${random_pet.prefix.id}-NodeGroupSecurityGroup"
     "kubernetes.io/cluster/${aws_eks_cluster.ControlPlane.name}" = "owned"
   }
 }
@@ -176,7 +176,7 @@ USERDATA
 
 // Launch template
 resource "aws_launch_template" "NodeGroupLaunchTemplate" {
-  name = "${local.cluster_name}-NodeGroupLaunchTemplate"
+  name = "${random_pet.prefix.id}-NodeGroupLaunchTemplate"
   iam_instance_profile {
     name = aws_iam_instance_profile.node_instance_profile.name
   }
@@ -196,7 +196,7 @@ resource "aws_launch_template" "NodeGroupLaunchTemplate" {
 
 // Autoscaling Group
 resource "aws_autoscaling_group" "NodeGroup" {
-  name = "${local.cluster_name}-NodeGroup"
+  name = "${random_pet.prefix.id}-NodeGroup"
   # aws_launch_template = aws_launch_template.NodeGroupLaunchTemplate.id
   desired_capacity = 2
   max_size         = 2
@@ -215,7 +215,7 @@ resource "aws_autoscaling_group" "NodeGroup" {
 
   tag {
     key                 = "Name"
-    value               = "${local.cluster_name}-Node"
+    value               = "${random_pet.prefix.id}-Node"
     propagate_at_launch = true
   }
 

@@ -35,4 +35,3 @@ provider "null" {
 provider "template" {
   version = "~> 2.1"
 }
-

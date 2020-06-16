@@ -14,9 +14,13 @@
 # limitations under the License.
 ############################################################################################
 
-resource "google_container_cluster" "primary" {
-  name     = var.cluster_name
-  location = var.cluster_location
+// Cluster definition
+
+data "google_compute_zones" "available" {}
+
+resource "google_container_cluster" "cluster" {
+  name     = "${var.project}-k8s"
+  location = var.region
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
@@ -24,8 +28,8 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = true
   initial_node_count       = 1
 
-  network    = var.cluster_network_name
-  subnetwork = var.cluster_subnetwork_name
+  network    = "default"
+  subnetwork = "default"
 
   network_policy {
     enabled  = true
@@ -33,13 +37,15 @@ resource "google_container_cluster" "primary" {
   }
 
   ip_allocation_policy {
-    cluster_secondary_range_name  = var.cluster_secondary_range_name
-    services_secondary_range_name = var.services_secondary_range_name
+    # cluster_secondary_range_name  = var.cluster_secondary_range_name
+    # services_secondary_range_name = var.services_secondary_range_name
+    cluster_ipv4_cidr_block = "/16"
+    services_ipv4_cidr_block = "/22"
   }
 
   master_auth {
-    username = ""
-    password = ""
+    username = var.gke_username
+    password = var.gke_password
 
     client_certificate_config {
       issue_client_certificate = false
@@ -55,12 +61,13 @@ resource "google_container_cluster" "primary" {
 
 }
 
+// Unmanaged node pool definition
 resource "google_container_node_pool" "primary_preemptible_nodes" {
-  name     = "${var.cluster_name}-node-pool"
-  location = var.cluster_location
-  cluster  = google_container_cluster.primary.name
-
-  node_count = var.cluster_num_nodes
+  name     = "${var.project}-nodepool"
+  location = var.region
+  cluster  = google_container_cluster.cluster.name
+  
+  node_count = 1
 
   node_config {
     preemptible  = true
@@ -77,28 +84,4 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
-// Kubeconfig generation
-
-resource "null_resource" "kubeconfig" {
-  triggers = {
-    refresh = var.refresh
-  }
-
-  provisioner "local-exec" {
-    environment = {
-      KUBECONFIG = var.kubeconfig
-    }
-    command = "gcloud container clusters get-credentials ${var.cluster_name} --zone ${var.cluster_location} --project ${var.cluster_project}"
-  }
-
-  # provisioner "local-exec" {
-  #   when    = destroy
-  #   command = "rm var.kubeconfig"
-  # }
-
-  depends_on = [
-    google_container_cluster.primary,
-    google_container_node_pool.primary_preemptible_nodes
-  ]
-}
 
