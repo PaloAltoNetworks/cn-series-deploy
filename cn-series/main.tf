@@ -26,6 +26,7 @@ resource "helm_release" "cn-series" {
   chart      = "cn-series"
   version    = "0.1.2"
   timeout    = 600
+  wait       = false
 
   // Kubernetes values
   set {

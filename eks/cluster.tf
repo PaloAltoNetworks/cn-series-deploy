@@ -382,8 +382,7 @@ resource "aws_eks_cluster" "ControlPlane" {
   }
   depends_on = [
     aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.AmazonEKSServicePolicy,
-    aws_iam_role_policy_attachment.
+    aws_iam_role_policy_attachment.AmazonEKSServicePolicy
   ]
 }
 

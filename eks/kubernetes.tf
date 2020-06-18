@@ -17,7 +17,7 @@
 
 resource "local_file" "kubeconfig" {
   content  = local.kubeconfig
-  filename = "${path.module}/${var.project}-kubeconfig"
+  filename = "${path.module}/${var.project}-kubeconfig.yaml"
 }
 
 resource "local_file" "auth_configmap" {
