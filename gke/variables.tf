@@ -25,13 +25,19 @@ variable "region" {
 }
 
 variable "gke_username" {
-  default = ""
-  type = string
+  default     = ""
+  type        = string
   description = "The cluster master username"
 }
 
 variable "gke_password" {
-  default = ""
-  type = string
+  default     = ""
+  type        = string
   description = "The cluster master password"
+}
+
+variable "k8s_version" {
+  default     = "1.15"
+  type        = string
+  description = "The version of Kubernetes"
 }

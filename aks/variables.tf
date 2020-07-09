@@ -21,15 +21,11 @@ variable "location" {
   description = "The Azure location"
 }
 
-# variable "client_id" {
-#   type        = string
-#   description = "The Service Principle appId"
-# }
-
-# variable "client_secret" {
-#   type        = string
-#   description = "The Service Principle password"
-# }
+variable "k8s_version" {
+  default     = "1.15.11"
+  type        = string
+  description = "The version of Kubernetes"
+}
 
 variable "ssh_key" {
   type        = string

@@ -32,9 +32,9 @@ variable "region" {
 #   description = "The VM auth key generated on Panorama"
 # }
 
-variable "cluster_version" {
+variable "k8s_version" {
   type        = string
-  default     = "1.14"
+  default     = "1.15"
   description = "Kubernetes version"
 }
 

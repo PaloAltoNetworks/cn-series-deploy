@@ -367,7 +367,7 @@ resource "aws_security_group_rule" "EgressClusterSharedNodeAllowAll" {
 resource "aws_eks_cluster" "ControlPlane" {
   name     = "${random_pet.prefix.id}-K8s"
   role_arn = aws_iam_role.ServiceRole.arn
-  version  = var.cluster_version
+  version  = var.k8s_version
 
   vpc_config {
     security_group_ids = [aws_security_group.ControlPlaneSecurityGroup.id]

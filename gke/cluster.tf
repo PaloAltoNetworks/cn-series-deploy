@@ -19,8 +19,9 @@
 data "google_compute_zones" "available" {}
 
 resource "google_container_cluster" "cluster" {
-  name     = "${var.project}-k8s"
-  location = var.region
+  name               = "${var.project}-k8s"
+  location           = var.region
+  min_master_version = var.k8s_version
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
@@ -39,7 +40,7 @@ resource "google_container_cluster" "cluster" {
   ip_allocation_policy {
     # cluster_secondary_range_name  = var.cluster_secondary_range_name
     # services_secondary_range_name = var.services_secondary_range_name
-    cluster_ipv4_cidr_block = "/16"
+    cluster_ipv4_cidr_block  = "/16"
     services_ipv4_cidr_block = "/22"
   }
 
@@ -66,7 +67,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   name     = "${var.project}-nodepool"
   location = var.region
   cluster  = google_container_cluster.cluster.name
-  
+
   node_count = 1
 
   node_config {
