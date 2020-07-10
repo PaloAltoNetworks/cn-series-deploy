@@ -27,7 +27,7 @@ variable "panorama_ip" {
 }
 
 variable "panorama_ip2" {
-  default = ""
+  default     = ""
   description = "The secondary Panorama IP address"
   type        = string
 }
@@ -54,53 +54,63 @@ variable "panorama_collector_group" {
 
 // CNI container
 variable "k8s_cni_image" {
+  default     = "docker.io/paloaltonetworks/pan_cni"
   description = "The CNI container image"
   type        = string
 }
 
 variable "k8s_cni_version" {
+  default     = "latest"
   description = "The CNI container image version tag"
   type        = string
 }
 
 // MP container
 variable "k8s_mp_init_image" {
+  default     = "docker.io/paloaltonetworks/pan_cn_mgmt_init"
   description = "The MP init container image"
   type        = string
 }
 
 variable "k8s_mp_init_version" {
+  default     = "latest"
   description = "The MP init container image version tag"
   type        = string
 }
 
 variable "k8s_mp_image" {
+  default     = "docker.io/paloaltonetworks/panos_cn_mgmt"
   description = "The MP container image"
   type        = string
 }
 
 variable "k8s_mp_image_version" {
+  default     = "latest"
   description = "The MP container image version tag"
   type        = string
 }
 
 variable "k8s_mp_cpu" {
+  default     = "2"
   description = "The MP container CPU limit"
   type        = string
 }
 
 // DP container
 variable "k8s_dp_image" {
+  default     = "docker.io/paloaltonetworks/panos_cn_ngfw"
   description = "The DP container image"
   type        = string
 }
 
 variable "k8s_dp_image_version" {
+  default     = "latest"
   description = "The DP container image version tag"
   type        = string
 }
 
 variable "k8s_dp_cpu" {
+  default     = "1"
   description = "The DP container CPU limit"
   type        = string
 }
