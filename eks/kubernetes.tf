@@ -17,12 +17,12 @@
 
 resource "local_file" "kubeconfig" {
   content  = local.kubeconfig
-  filename = "${path.module}/${var.project}-kubeconfig.yaml"
+  filename = "${path.module}/${random_pet.prefix.id}-kubeconfig.yaml"
 }
 
 resource "local_file" "auth_configmap" {
   content  = local.config_map_aws_auth
-  filename = "${path.module}/${var.project}-auth-configmap.yaml"
+  filename = "${path.module}/${random_pet.prefix.id}-auth-configmap.yaml"
 }
 
 resource "null_resource" "apply_configmap" {

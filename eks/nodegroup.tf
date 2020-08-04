@@ -156,7 +156,7 @@ data "aws_ami" "latest_ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu-eks/k8s_${var.cluster_version}/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    values = ["ubuntu-eks/k8s_${var.k8s_version}/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
   }
 
   filter {

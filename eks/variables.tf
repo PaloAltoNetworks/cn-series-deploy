@@ -15,15 +15,20 @@
 ############################################################################################
 
 
-variable "project" {
+# variable "project" {
+#   type        = string
+#   default     = "cnseries-testing"
+#   description = "An identifier for the deployment"
+# }
+
+variable "ssh_key_name" {
   type        = string
-  default     = "cnseries-testing"
-  description = "An identifier for the deployment"
+  description = "The SSH key pair name in EC2"
 }
 
 variable "region" {
   type        = string
-  default     = "us-west2"
+  default     = "us-west-2"
   description = "The AWS region"
 }
 
@@ -36,11 +41,6 @@ variable "k8s_version" {
   type        = string
   default     = "1.15"
   description = "Kubernetes version"
-}
-
-variable "ssh_key_name" {
-  type        = string
-  description = "The instance SSH key pair name"
 }
 
 variable "instance_type" {
