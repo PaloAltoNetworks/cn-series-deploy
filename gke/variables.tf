@@ -37,7 +37,7 @@ variable "gke_password" {
 }
 
 variable "k8s_version" {
-  default     = "1.15"
+  default     = "1.17"
   type        = string
   description = "The version of Kubernetes"
 }
