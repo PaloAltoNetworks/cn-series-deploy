@@ -15,17 +15,17 @@
 ############################################################################################
 
 output "cluster_master_ip" {
-  value = google_container_cluster.cluster.endpoint
+  value       = google_container_cluster.cluster.endpoint
   description = "The IP endpoint of the GKE cluster master"
 }
 
 output "cluster_name" {
-  value = google_container_cluster.cluster.name
+  value       = google_container_cluster.cluster.name
   description = "The name of the GKE cluster"
 }
 
 output "cluster_location" {
-  value = google_container_cluster.cluster.location
+  value       = google_container_cluster.cluster.location
   description = "The zone in which the GKE cluster resides"
 }
 

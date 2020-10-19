@@ -19,7 +19,7 @@ output "eks_cluster_name" {
 }
 
 output "eks_cluster_endpoint" {
-  value = split ("//", aws_eks_cluster.ControlPlane.endpoint)[1]
+  value = split("//", aws_eks_cluster.ControlPlane.endpoint)[1]
 }
 
 # output "eks_cluster_certificat_authority" {
