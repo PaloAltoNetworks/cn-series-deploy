@@ -26,6 +26,7 @@ jobs:
           cd ${GITHUB_WORKSPACE}
           for dir in $(find . -type d -not \( -name ".?*" \) -maxdepth 1 -mindepth 1);
           do
+            echo "Validating directory ${dir}..."
             cd ${GITHUB_WORKSPACE}/${dir}
             terraform init -backend=false
             terraform validate
