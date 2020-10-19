@@ -1,0 +1,36 @@
+
+---
+name: CI/CD
+on:
+  push:
+  pull_request:
+  
+  # Run at midnight GMT on Fridays.
+  schedule:
+    - cron: '0 0 * * 5'
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: terraform validate
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          for dir in $(find . -type d -not \( -name ".?*" \) -maxdepth 1 -mindepth 1);
+          do
+            cd ${GITHUB_WORKSPACE}/${dir}
+            terraform init -backend=false
+            terraform validate
+          done
+
+      - name: terraform fmt
+        run: |
+          terraform fmt -check -recursive
