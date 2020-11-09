@@ -14,9 +14,25 @@
 # limitations under the License.
 ############################################################################################
 
+// Project API Services
+
+resource "google_project_service" "compute" {
+  service = "compute.googleapis.com"
+}
+
+resource "google_project_service" "container" {
+  service = "container.googleapis.com"
+
+  # Needs compute.googleapis.com API enabled on Project
+  depends_on = [google_project_service.compute]
+}
+
 // Cluster definition
 
-data "google_compute_zones" "available" {}
+data "google_compute_zones" "available" {
+  # Needs compute.googleapis.com API enabled on Project
+  depends_on = [google_project_service.compute]
+}
 
 resource "google_container_cluster" "cluster" {
   name               = "${var.project}-k8s"
@@ -59,7 +75,8 @@ resource "google_container_cluster" "cluster" {
     }
   }
 
-
+  # Needs container.googleapis.com API enabled on Project
+  depends_on = [google_project_service.container]
 }
 
 // Unmanaged node pool definition
