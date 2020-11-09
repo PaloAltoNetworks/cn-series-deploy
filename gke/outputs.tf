@@ -32,3 +32,7 @@ output "cluster_location" {
 output "cluster_project" {
   value = google_container_cluster.cluster.project
 }
+
+output "kubectl_config_command" {
+  value = "gcloud container clusters get-credentials ${google_container_cluster.cluster.name} --region ${google_container_cluster.cluster.location} --project ${google_container_cluster.cluster.project}"
+}
