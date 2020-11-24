@@ -25,15 +25,18 @@ variable "region" {
 }
 
 variable "gke_username" {
-  default     = ""
   type        = string
   description = "The cluster master username"
 }
 
 variable "gke_password" {
-  default     = ""
   type        = string
   description = "The cluster master password"
+
+  validation {
+    condition     = length(var.gke_password) >= 16
+    error_message = "The cluster master passsword must be 16 characters or more."
+  }
 }
 
 variable "k8s_version" {
