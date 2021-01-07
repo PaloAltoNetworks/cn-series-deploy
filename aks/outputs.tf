@@ -26,6 +26,10 @@ output "az_cluster_endpoint" {
   value = azurerm_kubernetes_cluster.default.fqdn
 }
 
+output "run_this_command_to_configu_kubectl" {
+  value = "az aks get-credentials --name ${azurerm_kubernetes_cluster.default.name} --resource-group ${azurerm_resource_group.rg.name}"
+}
+
 # output "az_cluster_kubeconfig" {
 #   value = azurerm_kubernetes_cluster.default.kube_config_raw
 # }
