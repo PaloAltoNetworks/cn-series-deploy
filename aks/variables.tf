@@ -22,7 +22,7 @@ variable "location" {
 }
 
 variable "k8s_version" {
-  default     = "1.17.9"
+  default     = "1.18.10"
   type        = string
   description = "The version of Kubernetes"
 }
