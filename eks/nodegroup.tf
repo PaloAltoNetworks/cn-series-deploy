@@ -53,7 +53,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 
 // Instance profile
 resource "aws_iam_instance_profile" "node_instance_profile" {
-  name = "eks-instance-profile"
+  name = "${random_pet.prefix.id}-eks-instance-profile"
   role = aws_iam_role.NodeInstanceRole.name
 }
 
@@ -150,20 +150,23 @@ resource "aws_security_group_rule" "SSHIPv6" {
 
 
 // Grab the latest AMI
-data "aws_ami" "latest_ubuntu" {
-  most_recent = true
-  owners      = ["099720109477"] # Canonical
-
-  filter {
-    name   = "name"
-    values = ["ubuntu-eks/k8s_${var.k8s_version}/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
+data "aws_ssm_parameter" "latest_ubuntu" {
+    name = "/aws/service/canonical/ubuntu/server/bionic/stable/current/amd64/hvm/ebs-gp2/ami-id"
 }
+# data "aws_ami" "latest_ubuntu" {
+#   most_recent = true
+#   owners      = ["099720109477"] # Canonical
+
+#   filter {
+#     name   = "name"
+#     values = ["ubuntu-eks/k8s_${var.k8s_version}/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+#   }
+
+#   filter {
+#     name   = "virtualization-type"
+#     values = ["hvm"]
+#   }
+# }
 
 // Create the user-data field
 locals {
@@ -175,6 +178,7 @@ USERDATA
 }
 
 // Launch template
+
 resource "aws_launch_template" "NodeGroupLaunchTemplate" {
   name = "${random_pet.prefix.id}-NodeGroupLaunchTemplate"
   iam_instance_profile {
@@ -182,7 +186,8 @@ resource "aws_launch_template" "NodeGroupLaunchTemplate" {
   }
   key_name      = var.ssh_key_name
   instance_type = var.instance_type
-  image_id      = data.aws_ami.latest_ubuntu.image_id
+  image_id      = data.aws_ssm_parameter.latest_ubuntu.value
+  #image_id      = data.aws_ami.latest_ubuntu.image_id
   user_data     = base64encode(local.node_group_userdata)
   network_interfaces {
     device_index = 0
