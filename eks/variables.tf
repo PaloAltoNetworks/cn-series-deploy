@@ -39,7 +39,7 @@ variable "region" {
 
 variable "k8s_version" {
   type        = string
-  default     = "1.17"
+  default     = "1.19"
   description = "Kubernetes version"
 }
 
