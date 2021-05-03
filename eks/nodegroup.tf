@@ -53,7 +53,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 
 // Instance profile
 resource "aws_iam_instance_profile" "node_instance_profile" {
-  name = "eks-instance-profile"
+  name = "${random_pet.prefix.id}-eks-instance-profile"
   role = aws_iam_role.NodeInstanceRole.name
 }
 
@@ -150,13 +150,14 @@ resource "aws_security_group_rule" "SSHIPv6" {
 
 
 // Grab the latest AMI
+
 data "aws_ami" "latest_ubuntu" {
   most_recent = true
   owners      = ["099720109477"] # Canonical
 
   filter {
     name   = "name"
-    values = ["ubuntu-eks/k8s_${var.k8s_version}/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    values = ["ubuntu-eks/k8s_${var.k8s_version}/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
 
   filter {
@@ -175,6 +176,7 @@ USERDATA
 }
 
 // Launch template
+
 resource "aws_launch_template" "NodeGroupLaunchTemplate" {
   name = "${random_pet.prefix.id}-NodeGroupLaunchTemplate"
   iam_instance_profile {
