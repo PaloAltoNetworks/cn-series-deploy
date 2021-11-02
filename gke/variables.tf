@@ -24,23 +24,25 @@ variable "region" {
   description = "The GCP region"
 }
 
-variable "gke_username" {
-  type        = string
-  description = "The cluster master username"
-}
+# Not supported for GKE >= 1.19
+# variable "gke_username" {
+#   type        = string
+#   description = "The cluster master username"
+# }
 
-variable "gke_password" {
-  type        = string
-  description = "The cluster master password"
+# Not supported for GKE >= 1.19
+# variable "gke_password" {
+#   type        = string
+#   description = "The cluster master password"
 
-  validation {
-    condition     = length(var.gke_password) >= 16
-    error_message = "The cluster master passsword must be 16 characters or more."
-  }
-}
+#   validation {
+#     condition     = length(var.gke_password) >= 16
+#     error_message = "The cluster master passsword must be 16 characters or more."
+#   }
+# }
 
 variable "k8s_version" {
-  default     = "1.17"
+  default     = "1.20" # latest supported version of GKE as of 2021-09-28
   type        = string
   description = "The version of Kubernetes"
 }
